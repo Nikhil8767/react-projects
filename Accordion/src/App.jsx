@@ -26,7 +26,9 @@ function App() {
   return (
     <>
      <div className='wrapper'>
-      <button onClick={()=>setMultiSelection(!selectMultiSelection)}>enable multiple selection</button>
+      <button onClick={()=>setMultiSelection(!selectMultiSelection)}>
+         {selectMultiSelection ? handleSingleSelection : handleMultipleSeletion}
+        enable multiple selection</button>
             <div className='accordion'>
                 {
                     data && data.length > 0 ?
