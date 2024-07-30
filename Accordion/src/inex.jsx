@@ -1,5 +1,7 @@
 import { useState } from 'react'
-import data from './data.js'
+import data from './data'
+
+
 export default function Accordiaon(){
     cosnt[selected,setSelected]=useState(null)
 
@@ -11,7 +13,7 @@ export default function Accordiaon(){
                     data.map((dataItem)=>(
                         <div className='item'>
                             <div className='title'>
-                                <h3>{DataItem.question}</h3>
+                                <h3>{dataItem.question}</h3>
                                 <span>+</span>
                             </div>
                         </div>

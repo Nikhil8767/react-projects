@@ -1,33 +1,70 @@
 import { useState } from 'react'
 import reactLogo from './assets/react.svg'
 import viteLogo from '/vite.svg'
+import data from './data'
+
 import './App.css'
 
 function App() {
-  const [count, setCount] = useState(0)
+  const [selected, setSelected] = useState(null)
+  const [selectMultiSelection,setMultiSelection]=useState(false)
+  const [multi,setmulti]=useState([])
+
+  function handleSingleSelection(getCurrentId){
+    setSelected(getCurrentId===selected ? null :getCurrentId)
+    console.log(setSelected)
+  }
+
+  function handleMultipleSeletion(getCurrentId){
+    let cpyMultiple=[...multi];
+    const findIndexof=cpyMultiple.indexOf(getCurrentId);
+    if(findIndexof===-1) cpyMultiple.push(getCurrentId);
+    else cpyMultiple.splice(findIndexof,1)
+    setmulti(cpyMultiple)
+  }
 
   return (
     <>
-      <div>
-        <a href="https://vitejs.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.jsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
+     <div className='wrapper'>
+      <button onClick={()=>setMultiSelection(!selectMultiSelection)}>enable multiple selection</button>
+            <div className='accordion'>
+                {
+                    data && data.length > 0 ?
+                    data.map((dataItem)=>(
+                        <div className='item' >
+                            <div onClick={setMultiSelection 
+                              ? ()=>handleMultipleSeletion(dataItem.id)
+                              :()=>handleSingleSelection(dataItem.id)
+                              }
+                                className='title'>
+                                <h3>{dataItem.question}</h3>
+                                <span className='span'>+</span>
+                                <div>
+                                {
+                                  selectMultiSelection ?
+                                  multi.indexOf(dataItem.id)!==-1 &&(
+                                    <div className='content'>{dataItem.answer}</div>
+                                  ):selected===dataItem.id &&(
+                                    <div className='content'>{dataItem.answer}</div>
+                                  )
+                                }
+                                  {/* {
+                                  selected===dataItem.id || multi.indexOf(dataItem.id)!==-1 ?(
+                                    <div className='content'>{dataItem.answer}</div>
+                                  ) 
+                                  
+                                  :null
+                                  } */}
+                                  </div>
+                            </div>
+                        </div>
+                    ))
+                    :<div>No data found</div>
+
+                }
+                
+            </div>
+        </div>
     </>
   )
 }
