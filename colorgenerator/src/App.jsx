@@ -26,7 +26,7 @@ setcolor(hexColor)
     const g=ramdomutility(256);
     const b=ramdomutility(256);
     setcolor(`rgb${r},${g},${b}`)
-    console.log(`rgb${r},${g},${b}`);
+    console.log(`rgb(${r},${g},${b})`);
     }
 
     useEffect(()=>{
